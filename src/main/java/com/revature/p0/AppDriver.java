@@ -14,15 +14,15 @@ public class AppDriver {
         boolean goodUserInput = false;
         do {
             System.out.println("Please Select one of the following options: " +
-                    "\n     1. Register a new account" +
-                    "\n     2. Login");
+                               "\n     1. Register a new account" +
+                               "\n     2. Login");
             String option = console.readLine();
             if (option.trim().equals("1") || option.trim().equals("2")){
                 goodUserInput = true;
             } else {
                 System.out.println(option + " was not a valid option.");
             }
-        } while (goodUserInput == false);
+        } while (!goodUserInput);
         /*switch (option){
             case "1":
                 RegisterScreen registerScreen = new RegisterScreen(userService);
