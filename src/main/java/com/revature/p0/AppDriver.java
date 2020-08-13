@@ -1,6 +1,7 @@
 package com.revature.p0;
 
 import com.revature.p0.screens.RegisterScreen;
+import com.revature.p0.services.UserService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +10,11 @@ import java.io.InputStreamReader;
 public class AppDriver {
 
     public static void main(String[] args) throws IOException {
+        // UserRepository userRepo = new UserRepository();
+        // UserService userService = new UserService(userRepo);
+
         System.out.println("Welcome to Revature Project bank!");
+
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         boolean goodUserInput = false;
         do {
@@ -23,6 +28,7 @@ public class AppDriver {
                 System.out.println(option + " was not a valid option.");
             }
         } while (!goodUserInput);
+
         /*switch (option){
             case "1":
                 RegisterScreen registerScreen = new RegisterScreen(userService);

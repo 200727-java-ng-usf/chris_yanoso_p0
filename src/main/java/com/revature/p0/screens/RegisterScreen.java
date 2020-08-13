@@ -1,9 +1,17 @@
 package com.revature.p0.screens;
 
+import com.revature.p0.services.UserService;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class RegisterScreen implements Screen{
+
+    private UserService userService;
+
+    public RegisterScreen(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
    public void render() {
