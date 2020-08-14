@@ -1,6 +1,7 @@
 package com.revature.p0;
 
 import com.revature.p0.repos.UserRepository;
+import com.revature.p0.screens.LoginScreen;
 import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.services.UserService;
 
@@ -42,10 +43,10 @@ public class AppDriver {
                 RegisterScreen registerScreen = new RegisterScreen(userService);
                 registerScreen.render();
                 break;
-            //case "2":
-            // LoginScreen loginScreen = new LoginScreen(userService);
-            //loginScreen.render();
-            // break;
+            case "2":
+                LoginScreen loginScreen = new LoginScreen(userService);
+                loginScreen.render();
+                break;
             default:
                 System.out.println(option + " is not a valid option!");
 
