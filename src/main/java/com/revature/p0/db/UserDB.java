@@ -4,6 +4,7 @@ import com.revature.p0.models.AppUser;
 import com.revature.p0.models.Role;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class UserDB extends HashMap<Integer, AppUser> {
@@ -17,8 +18,13 @@ public class UserDB extends HashMap<Integer, AppUser> {
             reader = new BufferedReader(new FileReader("src/main/resources/AccountHolderUsers.txt"));
             String line = reader.readLine();
             while (line != null) {
-                String [] userFields = ":".split(line);
-                userDataSet.addUser(new AppUser(userFields[0],userFields[1],userFields[2],userFields[3]));
+                String [] userFields = line.split(":");
+                AppUser newUser = new AppUser();
+                newUser.setFirstName(userFields[0]);
+                newUser.setLastName(userFields[1]);
+                newUser.setUserName(userFields[2]);
+                newUser.setPassword(userFields[3]);
+                userDataSet.addUser(newUser);
 
                 line = reader.readLine();
             }
