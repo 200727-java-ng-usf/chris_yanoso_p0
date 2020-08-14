@@ -3,25 +3,22 @@ package com.revature.p0.db;
 import com.revature.p0.models.AppUser;
 import com.revature.p0.models.Role;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class UserDB extends HashMap<Integer, AppUser> {
-    public static UserDB userDataset = new UserDB();
+
+    public static UserDB userDataSet = new UserDB();
     public static Integer key = 1;
 
     static{
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("src/main/resources/RegisteredUsers.txt"));
+            reader = new BufferedReader(new FileReader("src/main/resources/AccountHolderUsers.txt"));
             String line = reader.readLine();
             while (line != null) {
                 String [] userFields = ":".split(line);
-                AppUser newUser = new AppUser(userFields[0],userFields[1],userFields[2],userFields[3]);
-                userDataset.addUser(newUser);
+                userDataSet.addUser(new AppUser(userFields[0],userFields[1],userFields[2],userFields[3]));
 
                 line = reader.readLine();
             }
@@ -29,7 +26,7 @@ public class UserDB extends HashMap<Integer, AppUser> {
             reader.close();
         } catch (Exception ioe){
             ioe.printStackTrace();
-            System.out.println("An exception occurred while reading RegisteredUsers.txt");
+            System.out.println("An exception occurred while reading AccountHolderUsers.txt");
         }
 
     }
@@ -37,14 +34,14 @@ public class UserDB extends HashMap<Integer, AppUser> {
     public AppUser addUser(AppUser newUser){
         AppUser nUser = new AppUser(newUser);
         nUser.setId(key);
-        userDataset.put(key++, nUser);
+        userDataSet.put(key++, nUser);
         return nUser;
 
     }
 
     public AppUser findUserByCredentials(String userName, String password){
 
-        for(AppUser user: userDataset.values()) {
+        for(AppUser user: userDataSet.values()) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 return user;
             }
@@ -54,7 +51,7 @@ public class UserDB extends HashMap<Integer, AppUser> {
 
     public AppUser findUserByUserName(String userName) {
 
-        for(AppUser user: userDataset.values()) {
+        for(AppUser user: userDataSet.values()) {
             if (user.getUserName().equals(userName)){
                 return user;
             }
@@ -64,12 +61,23 @@ public class UserDB extends HashMap<Integer, AppUser> {
 
     public AppUser findUserById(int id) {
 
-        for(AppUser user: userDataset.values()){
+        for(AppUser user: userDataSet.values()){
             if (user.getId().equals(id)){
                 return user;
             }
         }
         return null;
+    }
+
+    public void addNewUserToFile(AppUser newUser) throws IOException {
+        File file = new File("src/main/resources/AccountHolderUsers.txt");
+        FileWriter fr = new FileWriter(file, true);
+        BufferedWriter br = new BufferedWriter(fr);
+        String data = newUser.getFirstName() + ":" + newUser.getLastName() + ":" + newUser.getUserName() + ":" + newUser.getPassword();
+        br.write("\n" + data);
+
+        br.close();
+        fr.close();
     }
 
 }

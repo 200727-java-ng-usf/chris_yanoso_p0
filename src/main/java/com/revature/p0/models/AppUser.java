@@ -5,7 +5,7 @@ import com.sun.org.apache.bcel.internal.util.ClassStack;
 import java.util.Objects;
 
 public class AppUser {
-   private int id;
+   private Integer id;
    private String firstName;
    private String lastName;
    private String userName;
@@ -29,7 +29,7 @@ public class AppUser {
         this.role = role;
     }
 
-    public AppUser(String firstName, String lastName, String userName, String password, Role role, int id) {
+    public AppUser(String firstName, String lastName, String userName, String password, Role role, Integer id) {
         this(firstName, lastName, userName, password, role);
         this.id = id;
     }

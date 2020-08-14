@@ -1,9 +1,13 @@
 package com.revature.p0.screens;
 
+import com.revature.p0.models.AppUser;
 import com.revature.p0.services.UserService;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static com.revature.p0.AppDriver.main2;
 
 public class RegisterScreen implements Screen{
 
@@ -14,8 +18,8 @@ public class RegisterScreen implements Screen{
     }
 
     @Override
-   public void render() {
-        /*BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+   public void render() throws IOException {
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         String firstName, lastName, username, password;
 
         try {
@@ -36,6 +40,8 @@ public class RegisterScreen implements Screen{
 
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
+        main2();
+
     }
 }
