@@ -18,6 +18,7 @@ public class AppDriver {
 
         System.out.println("Welcome to Revature Project bank!");
         main2();
+        main3();
 
 
     }
@@ -46,6 +47,44 @@ public class AppDriver {
             case "2":
                 LoginScreen loginScreen = new LoginScreen(userService);
                 loginScreen.render();
+                break;
+            default:
+                System.out.println(option + " is not a valid option!");
+
+                break;
+        }
+    }
+
+    public static void main3() throws IOException {
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+        boolean goodUserInput = false;
+        String option;
+        do {
+            System.out.println("Please Select one of the following options: " +
+                    "\n     1. Deposit" +
+                    "\n     2. Withdraw" +
+                    "\n     3. View Balance" +
+                    "\n     4. Log out");
+            option = console.readLine();
+            if (option.trim().equals("1") || option.trim().equals("2") || option.trim().equals("3") || option.trim().equals("4")) {
+                goodUserInput = true;
+            } else {
+                System.out.println(option + " was not a valid option.");
+            }
+        } while (!goodUserInput);
+
+        switch (option) {
+            case "1":
+                System.out.println("Option 1 selected");
+                break;
+            case "2":
+                System.out.println("Option 2 selected");
+                break;
+            case "3":
+                System.out.println("Option 3 selected");
+                break;
+            case "4":
+                System.out.println("Option 4 selected");
                 break;
             default:
                 System.out.println(option + " is not a valid option!");
