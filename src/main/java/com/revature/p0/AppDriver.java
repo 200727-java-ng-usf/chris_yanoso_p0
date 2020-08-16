@@ -1,8 +1,7 @@
 package com.revature.p0;
 
 import com.revature.p0.repos.UserRepository;
-import com.revature.p0.screens.LoginScreen;
-import com.revature.p0.screens.RegisterScreen;
+import com.revature.p0.screens.*;
 import com.revature.p0.services.UserService;
 
 import java.io.BufferedReader;
@@ -75,22 +74,30 @@ public class AppDriver {
 
         switch (option) {
             case "1":
-                System.out.println("Option 1 selected");
+                DepositScreen depositScreen = new DepositScreen();
+                depositScreen.render();
                 break;
             case "2":
-                System.out.println("Option 2 selected");
+                WithdrawScreen withdrawScreen = new WithdrawScreen();
+                withdrawScreen.render();
                 break;
             case "3":
-                System.out.println("Option 3 selected");
+                BalanceScreen balanceScreen = new BalanceScreen();
+                balanceScreen.render();
                 break;
             case "4":
-                System.out.println("Option 4 selected");
+                logoff();
                 break;
             default:
                 System.out.println(option + " is not a valid option!");
 
                 break;
         }
+    }
+
+    public static void logoff(){
+        System.out.println("Log out successful!");
+        System.out.println("Have a nice day!");
     }
 }
 
