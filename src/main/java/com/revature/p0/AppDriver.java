@@ -1,15 +1,20 @@
 package com.revature.p0;
 
 import com.revature.p0.models.AppUser;
+import com.revature.p0.models.UserAccount;
 import com.revature.p0.repos.UserRepository;
 import com.revature.p0.screens.*;
 import com.revature.p0.services.UserService;
+import com.revature.p0.user.CurrentUser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AppDriver {
+    /**
+     * This Driver will cycling through options and direct user to where they want to go
+     */
 
     static UserRepository userRepo = new UserRepository();
     static UserService userService = new UserService(userRepo);
@@ -22,6 +27,13 @@ public class AppDriver {
 
 
     }
+
+    /**
+     * Login or Register new account?
+     * Successful Register will return to main2
+     * Successful Login will continue to driver (main3)
+     * @throws IOException
+     */
 
     public static void main2() throws IOException {
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
@@ -55,10 +67,18 @@ public class AppDriver {
         }
     }
 
+    /**
+     * After successful login app will ask user what they want to do
+     * switch case that will direct user to the appropriate screen
+     * @throws IOException
+     */
+
     public static void main3() throws IOException {
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         boolean goodUserInput = false;
         String option;
+        UserAccount currentAccount = new UserAccount(CurrentUser.getCurrentUser());
+        CurrentUser.setCurrentAccount(currentAccount);
         do {
             System.out.println("Please Select one of the following options: " +
                     "\n     1. Deposit" +
@@ -96,6 +116,9 @@ public class AppDriver {
         }
     }
 
+    /**
+     * ends the app, current only end of app
+     */
     public static void logoff(){
         System.out.println("Log out successful!");
         System.out.println("Have a nice day!");

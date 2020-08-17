@@ -8,6 +8,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Login screen that asks user for username and password
+ * checks if username and password are correct
+ * if login is successful, saves appUser to currentUser to be used elsewhere and continues
+ * if not do while loop will loop until login success
+ */
+
 public class LoginScreen implements Screen {
 
     private UserService userService;
@@ -21,23 +28,27 @@ public class LoginScreen implements Screen {
 
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         String username, password;
+        boolean success = false;
 
-        try {
-            System.out.println("Please provide your login credentials");
-            System.out.print("Username: ");
-            username = console.readLine();
-            System.out.print("Password: ");
-            password = console.readLine();
+        do{
+            try {
+                System.out.println("Please provide your login credentials");
+                System.out.print("Username: ");
+                username = console.readLine();
+                System.out.print("Password: ");
+                password = console.readLine();
 
-            AppUser authUser = userService.authenticate(username, password);
-            System.out.println(authUser);
-            //Sets app's current user to be the logged in one
-            if (authUser != null){
-                CurrentUser.setCurrentUser(authUser);
+                AppUser authUser = userService.authenticate(username, password);
+                System.out.println(authUser);
+                //Sets app's current user to be the logged in one
+                if (authUser != null){
+                    CurrentUser.setCurrentUser(authUser);
+                    success = true;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } while (!success);
     }
 }

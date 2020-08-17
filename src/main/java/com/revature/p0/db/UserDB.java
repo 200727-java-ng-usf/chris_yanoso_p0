@@ -8,9 +8,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class UserDB extends HashMap<Integer, AppUser> {
+    /**
+     * creates a user database that can be easily read by the app
+     */
 
     public static UserDB userDataSet = new UserDB();
     public static Integer key = 1;
+
+    /**
+     * static block that looks for already registered users from a text file in resources
+     */
 
     static{
         BufferedReader reader;
@@ -37,6 +44,11 @@ public class UserDB extends HashMap<Integer, AppUser> {
 
     }
 
+    /**
+     * method to add user to the database from either text or registerScreen
+     * @param newUser
+     * @return
+     */
     public AppUser addUser(AppUser newUser){
         AppUser nUser = new AppUser(newUser);
         nUser.setId(key);
@@ -45,6 +57,12 @@ public class UserDB extends HashMap<Integer, AppUser> {
 
     }
 
+    /**
+     * finds a user by username and password in the database
+     * @param userName
+     * @param password
+     * @return
+     */
     public AppUser findUserByCredentials(String userName, String password){
 
         for(AppUser user: userDataSet.values()) {
@@ -55,6 +73,11 @@ public class UserDB extends HashMap<Integer, AppUser> {
         return null;
     }
 
+    /**
+     * finds user by original username
+     * @param userName
+     * @return
+     */
     public AppUser findUserByUserName(String userName) {
 
         for(AppUser user: userDataSet.values()) {
@@ -65,6 +88,11 @@ public class UserDB extends HashMap<Integer, AppUser> {
         return null;
     }
 
+    /**
+     * find user by unique id which addUser will increase every time it adds one
+     * @param id
+     * @return
+     */
     public AppUser findUserById(int id) {
 
         for(AppUser user: userDataSet.values()){
@@ -74,6 +102,12 @@ public class UserDB extends HashMap<Integer, AppUser> {
         }
         return null;
     }
+
+    /**
+     * adds the new users added from app running to the persistent file
+     * @param newUser
+     * @throws IOException
+     */
 
     public void addNewUserToFile(AppUser newUser) throws IOException {
         File file = new File("src/main/resources/AccountHolderUsers.txt");

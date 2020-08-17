@@ -9,6 +9,12 @@ import java.io.InputStreamReader;
 
 import static com.revature.p0.AppDriver.main2;
 
+/**
+ * uses BufferedReader to get users info
+ * uses userService.register method to check if info is valid/original
+ * saves user to the repo
+ */
+
 public class RegisterScreen implements Screen{
 
     private UserService userService;

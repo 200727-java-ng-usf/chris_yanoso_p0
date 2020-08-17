@@ -11,18 +11,24 @@ import java.io.InputStreamReader;
 
 import static com.revature.p0.AppDriver.main3;
 
+/**
+ * asks user for deposit
+ * adds to money to account
+ */
+
 public class DepositScreen implements Screen {
 
     private UserService userService;
-    private AppUser thisUser;
+    private UserAccount currentAccount;
 
     public DepositScreen(UserService userService){
         this.userService = userService;
+        this.currentAccount = CurrentUser.getCurrentAccount();
     }
     @Override
     public void render() throws IOException {
 
-        UserAccount currentAccount = new UserAccount(CurrentUser.getCurrentUser());
+
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         int depositAmount;
         System.out.println("DepositScreen reached!");

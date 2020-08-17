@@ -13,12 +13,24 @@ import static com.revature.p0.AppDriver.main2;
 import static jdk.jfr.internal.tool.Main.main;
 
 public class UserService {
+    /**
+     * class that has methods to deal with user input about AppUsers
+     */
 
     private UserRepository userRepo;
 
     public UserService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
+
+    /**
+     * LoginScreen uses authenticate
+     * checks to see if a user in userRepo has the same username and password
+     * @param userName
+     * @param password
+     * @return
+     * @throws IOException
+     */
 
     public AppUser authenticate(String userName, String password) throws IOException {
 
@@ -38,7 +50,14 @@ public class UserService {
         return authenticatedUser;
     }
 
-
+    /**
+     * RegisterScreen uses register
+     * checks to see if user input info is valid
+     * checks to see if it is original
+     * @param newUser
+     * @return
+     * @throws IOException
+     */
 
     public AppUser register(AppUser newUser) throws IOException {
 
