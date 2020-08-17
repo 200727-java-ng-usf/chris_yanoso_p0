@@ -1,5 +1,6 @@
 package com.revature.p0.services;
 
+import com.revature.p0.exceptions.AuthenticationException;
 import com.revature.p0.models.AppUser;
 import com.revature.p0.models.Role;
 import com.revature.p0.repos.UserRepository;
@@ -7,6 +8,9 @@ import com.revature.p0.repos.UserRepository;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.revature.p0.AppDriver.main2;
+import static jdk.jfr.internal.tool.Main.main;
 
 public class UserService {
 
@@ -16,7 +20,7 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public AppUser authenticate(String userName, String password){
+    public AppUser authenticate(String userName, String password) throws IOException {
 
         if (userName == null || userName.trim().equals("") || password == null || password.trim().equals("")) {
             // TODO implement a custom InvalidRequestException
@@ -27,7 +31,8 @@ public class UserService {
 
         if (authenticatedUser == null) {
             //TODO implement a custom AuthenticationException
-            throw new RuntimeException("No user found with the provided credentials");
+            throw new AuthenticationException("No user found with the provided credentials");
+
         }
 
         return authenticatedUser;

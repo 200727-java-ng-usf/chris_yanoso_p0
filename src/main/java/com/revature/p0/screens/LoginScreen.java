@@ -2,6 +2,7 @@ package com.revature.p0.screens;
 
 import com.revature.p0.models.AppUser;
 import com.revature.p0.services.UserService;
+import com.revature.p0.user.CurrentUser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +31,10 @@ public class LoginScreen implements Screen {
 
             AppUser authUser = userService.authenticate(username, password);
             System.out.println(authUser);
+            //Sets app's current user to be the logged in one
+            if (authUser != null){
+                CurrentUser.setCurrentUser(authUser);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

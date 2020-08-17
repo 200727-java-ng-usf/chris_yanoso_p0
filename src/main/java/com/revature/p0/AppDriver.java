@@ -1,5 +1,6 @@
 package com.revature.p0;
 
+import com.revature.p0.models.AppUser;
 import com.revature.p0.repos.UserRepository;
 import com.revature.p0.screens.*;
 import com.revature.p0.services.UserService;
@@ -74,7 +75,7 @@ public class AppDriver {
 
         switch (option) {
             case "1":
-                DepositScreen depositScreen = new DepositScreen();
+                DepositScreen depositScreen = new DepositScreen(userService);
                 depositScreen.render();
                 break;
             case "2":
