@@ -2,11 +2,13 @@ package com.revature.p0.screens;
 
 import com.revature.p0.models.AppUser;
 import com.revature.p0.services.UserService;
-import com.revature.p0.user.CurrentUser;
+import com.revature.p0.util.CurrentUser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static com.revature.p0.AppDriver.app;
 
 /**
  * Login screen that asks user for username and password
@@ -15,16 +17,19 @@ import java.io.InputStreamReader;
  * if not do while loop will loop until login success
  */
 
-public class LoginScreen implements Screen {
+public class LoginScreen extends Screen {
 
     private UserService userService;
 
+
+
     public LoginScreen(UserService userService) {
+        super("LoginScreen", "/login");
         this.userService = userService;
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
 
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         String username, password;
@@ -50,5 +55,6 @@ public class LoginScreen implements Screen {
                 e.printStackTrace();
             }
         } while (!success);
+        app.getRouter().navigate("/dash");
     }
 }

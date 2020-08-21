@@ -2,13 +2,17 @@ package com.revature.p0.screens;
 
 import java.io.IOException;
 
-import static com.revature.p0.AppDriver.main3;
+import static com.revature.p0.AppDriver.app;
 
-public class WithdrawScreen implements Screen {
+
+public class WithdrawScreen extends Screen {
+    public WithdrawScreen() {
+        super("WithdrawScreen", "/withdraw");
+    }
+
     @Override
     public void render() throws IOException {
         System.out.println("Withdraw Screen reached!");
-
-        main3();
+        app.getRouter().navigate("/dash");
     }
 }

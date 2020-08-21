@@ -31,6 +31,7 @@ public class UserDB extends HashMap<Integer, AppUser> {
                 newUser.setLastName(userFields[1]);
                 newUser.setUserName(userFields[2]);
                 newUser.setPassword(userFields[3]);
+                newUser.setRole(Role.ACCOUNT_HOLDER);
                 userDataSet.addUser(newUser);
 
                 line = reader.readLine();

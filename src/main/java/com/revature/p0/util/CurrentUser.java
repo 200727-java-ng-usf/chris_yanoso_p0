@@ -1,4 +1,4 @@
-package com.revature.p0.user;
+package com.revature.p0.util;
 
 import com.revature.p0.models.AppUser;
 import com.revature.p0.models.UserAccount;
