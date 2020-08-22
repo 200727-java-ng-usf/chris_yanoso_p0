@@ -6,6 +6,7 @@ import com.revature.p0.services.UserService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
 
 import static com.revature.p0.AppDriver.app;
 
@@ -42,8 +43,7 @@ public class RegisterScreen extends Screen{
             password = app.getConsole().readLine().trim();
 
             AppUser newUser = new AppUser(firstName, lastName, username, password);
-            AppUser registeredUser = userService.register(newUser);
-            System.out.println(registeredUser);
+             userService.register(newUser);
 
         } catch (Exception e) {
             e.printStackTrace();

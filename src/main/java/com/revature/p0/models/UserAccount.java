@@ -2,12 +2,13 @@ package com.revature.p0.models;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 public class UserAccount {
     private AppUser thisUser;
     private File accountFile;
 
-    public UserAccount(){super();}
+    public UserAccount(Optional<AppUser> currentUser){super();}
 
     public UserAccount(AppUser appUser) throws IOException {
         this.thisUser = appUser;

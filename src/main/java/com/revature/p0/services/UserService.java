@@ -7,6 +7,7 @@ import com.revature.p0.repos.UserRepository;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -31,16 +32,16 @@ public class UserService {
      * @throws IOException
      */
 
-    public AppUser authenticate(String userName, String password) throws IOException {
+    public Optional<AppUser> authenticate(String userName, String password) throws IOException {
 
         if (userName == null || userName.trim().equals("") || password == null || password.trim().equals("")) {
             // TODO implement a custom InvalidRequestException
             throw new RuntimeException("Invalid username/password provided");
         }
 
-        AppUser authenticatedUser =userRepo.findUserByCredentials(userName, password);
+        Optional<AppUser> authenticatedUser =userRepo.findUserByCredentials(userName, password);
 
-        if (authenticatedUser == null) {
+        if (!authenticatedUser.isPresent()) {
             //TODO implement a custom AuthenticationException
             throw new AuthenticationException("No user found with the provided credentials");
 
@@ -58,20 +59,20 @@ public class UserService {
      * @throws IOException
      */
 
-    public AppUser register(AppUser newUser) throws IOException {
+    public void register(AppUser newUser) throws IOException {
 
         if (!isUserValid(newUser)) {
             //TODO implement a custom InvalidRequestException
             throw new RuntimeException("Invalid user field values provided during registration!");
         }
 
-        if (userRepo.findUserByUserName(newUser.getUserName()) != null) {
+       if (userRepo.findUserByUserName(newUser.getUserName()).isPresent()) {
             //TODO implement a custom ResourcePersistenceException
             throw new RuntimeException("Provided username is already in use!");
-        }
+       }
 
         newUser.setRole(Role.ACCOUNT_HOLDER);
-        return userRepo.save(newUser);
+        userRepo.save(newUser);
     }
 
     public Set<AppUser> getAllUsers(){

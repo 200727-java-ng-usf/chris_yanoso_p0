@@ -7,6 +7,7 @@ import com.revature.p0.util.CurrentUser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
 
 import static com.revature.p0.AppDriver.app;
 
@@ -42,11 +43,10 @@ public class LoginScreen extends Screen {
                 username = console.readLine();
                 System.out.print("Password: ");
                 password = console.readLine();
-
-                AppUser authUser = userService.authenticate(username, password);
-                System.out.println(authUser);
+                //when user is returned from db the role is off by 1
+                Optional<AppUser> authUser = userService.authenticate(username, password);
                 //Sets app's current user to be the logged in one
-                if (authUser != null){
+                if (authUser.isPresent()){
                     CurrentUser.setCurrentUser(authUser);
                     success = true;
                 }
