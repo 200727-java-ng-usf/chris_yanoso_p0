@@ -5,17 +5,42 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class UserAccount {
-    private AppUser thisUser;
-    private File accountFile;
+    private int id;
+    private float balance;
+    private int user_id;
 
-    public UserAccount(Optional<AppUser> currentUser){super();}
-
-    public UserAccount(AppUser appUser) throws IOException {
-        this.thisUser = appUser;
-        File account = new File("src/main/resources/" + appUser.getUserName() + ".txt");
-        boolean exists = account.exists();
-        if (!exists) account.createNewFile();
-        this.accountFile = account;
+    public UserAccount(int id, float balance, int user_id) {
+        this.id = id;
+        this.balance = balance;
+        this.user_id = user_id;
     }
 
+
+    public UserAccount() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 }

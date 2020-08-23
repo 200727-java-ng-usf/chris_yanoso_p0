@@ -12,13 +12,13 @@ import java.util.Optional;
 
 public class CurrentUser {
     public static Optional<AppUser> currentUser;
-    public static UserAccount currentAccount;
+    public static Optional<UserAccount> currentAccount;
 
-    public static UserAccount getCurrentAccount() {
+    public static Optional<UserAccount> getCurrentAccount() {
         return currentAccount;
     }
 
-    public static void setCurrentAccount(UserAccount currentAccount) {
+    public static void setCurrentAccount(Optional<UserAccount> currentAccount) {
         CurrentUser.currentAccount = currentAccount;
     }
 

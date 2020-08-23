@@ -1,6 +1,7 @@
 package com.revature.p0.screens;
 
 import com.revature.p0.models.AppUser;
+import com.revature.p0.services.AccountService;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.CurrentUser;
 
@@ -48,6 +49,7 @@ public class LoginScreen extends Screen {
                 //Sets app's current user to be the logged in one
                 if (authUser.isPresent()){
                     CurrentUser.setCurrentUser(authUser);
+                    CurrentUser.setCurrentAccount(AccountService.setCurrentAccount(authUser));
                     success = true;
                 }
 

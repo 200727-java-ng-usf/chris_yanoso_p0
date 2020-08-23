@@ -17,11 +17,8 @@ public class DashboardScreen extends Screen {
 
     @Override
     public void render() throws IOException {
-        System.out.println("Dash reached");
         boolean goodUserInput = false;
         String option;
-        UserAccount currentAccount = new UserAccount(CurrentUser.getCurrentUser());
-        CurrentUser.setCurrentAccount(currentAccount);
         do {
             System.out.println("Please Select one of the following options: " +
                     "\n     1. Deposit" +

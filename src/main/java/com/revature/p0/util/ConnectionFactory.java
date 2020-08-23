@@ -28,8 +28,8 @@ public class ConnectionFactory {
 
             conn = DriverManager.getConnection(
                     "jdbc:postgresql://java-ng-usf-200727.casmekiat9nm.us-east-1.rds.amazonaws.com:5432/postgres",
-                    "project_username",
-                    "password");
+                    "project_app",
+                    "revature");
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
