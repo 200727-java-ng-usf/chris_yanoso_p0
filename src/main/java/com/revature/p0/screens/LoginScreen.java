@@ -38,24 +38,19 @@ public class LoginScreen extends Screen {
         boolean success = false;
 
         do{
-            try {
-                System.out.println("Please provide your login credentials");
-                System.out.print("Username: ");
-                username = console.readLine();
-                System.out.print("Password: ");
-                password = console.readLine();
-                //when user is returned from db the role is off by 1
-                Optional<AppUser> authUser = userService.authenticate(username, password);
-                //Sets app's current user to be the logged in one
-                if (authUser.isPresent()){
-                    CurrentUser.setCurrentUser(authUser);
-                    CurrentUser.setCurrentAccount(AccountService.setCurrentAccount(authUser));
-                    success = true;
+            System.out.println("Please provide your login credentials");
+            System.out.print("Username: ");
+            username = console.readLine();
+            System.out.print("Password: ");
+            password = console.readLine();
+            //when user is returned from db the role is off by 1
+            Optional<AppUser> authUser = userService.authenticate(username, password);
+            //Sets app's current user to be the logged in one
+            if (authUser.isPresent()){
+                CurrentUser.setCurrentUser(authUser);
+                CurrentUser.setCurrentAccount(AccountService.setCurrentAccount(authUser));
+                success = true;
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } while (!success);
         app.getRouter().navigate("/dash");
     }

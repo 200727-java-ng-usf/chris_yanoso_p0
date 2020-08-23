@@ -49,7 +49,7 @@ public class UserRepository {
 
 
         }catch (SQLException se){
-            se.printStackTrace();
+            System.out.println("A problem with the database connection has occurred");
         }
         // when the role is returned from database, it is off by 1!
         return _user;
@@ -72,7 +72,8 @@ public class UserRepository {
             _user = mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException se) {
-            se.printStackTrace();
+            System.out.println("A problem with the database connection has occurred");
+
         }
 
         return _user;
@@ -106,7 +107,7 @@ public class UserRepository {
             }
 
         } catch (SQLException se) {
-            se.printStackTrace();
+            System.out.println("A problem with the database connection has occurred");
         }
 
 

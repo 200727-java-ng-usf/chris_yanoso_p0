@@ -30,7 +30,7 @@ public class RegisterScreen extends Screen{
    public void render() throws IOException {
         String firstName, lastName, username, password;
 
-        try {
+
 
             System.out.println("Sign up for a new account!");
             System.out.print("First name: ");
@@ -45,9 +45,7 @@ public class RegisterScreen extends Screen{
             AppUser newUser = new AppUser(firstName, lastName, username, password);
              userService.register(newUser);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
     }
 }

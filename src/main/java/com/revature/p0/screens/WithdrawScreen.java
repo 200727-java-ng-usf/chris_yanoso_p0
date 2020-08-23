@@ -44,7 +44,7 @@ public class WithdrawScreen extends Screen {
             } catch (InputMismatchException ime) {
                 System.out.println("Please enter a valid number");
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("An exception has occurred: " + e);;
             }
         }
         app.getRouter().navigate("/dash");

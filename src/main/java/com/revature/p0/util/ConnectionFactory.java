@@ -32,7 +32,7 @@ public class ConnectionFactory {
                     "revature");
 
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            System.out.println("A problem with database connection has occurred");
         }
 
         if (conn == null) {

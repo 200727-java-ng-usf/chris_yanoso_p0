@@ -31,32 +31,55 @@ create table app_users(
 
 create table user_accounts(
 	id serial,
-	balance int,
-	user_id int not null,
+	balance numeric,
+	user_id serial not null,
 	
 	constraint user_accounts_pk
-	primary key (id),
-	
-	constraint accounts_user_fk 
-	foreign key (user_id)
-	references app_users
+	primary key (id)
+	 
 );
 
 
-alter table app_users 
-add accounts_id int;
-
-alter table app_users 
-add 
-constraint user_accounts_fk
-foreign key (accounts_id)
-references user_accounts;
 
 insert into user_roles (name)
 values ('ADMIN'), ('MANAGER'), ('ACCOUNT_HOLDER'), ('CLOSED');
 
-alter table user_accounts 
-drop balance;
+commit;
 
-alter table project.user_accounts
-add balance numeric;
+grant usage on schema project to project_app;
+
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA project GRANT SELECT ON TABLES TO project_app;
+GRANT SELECT ON ALL TABLES IN SCHEMA project TO project_app;
+GRANT update ON ALL TABLES IN SCHEMA project TO project_app;
+GRANT insert ON ALL TABLES IN SCHEMA project TO project_app;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA project TO project_app;
+select * from app_users;
+
+SELECT table_catalog, table_schema, table_name, privilege_type
+FROM   information_schema.table_privileges 
+WHERE  grantee = 'project_app';
+;
+
+
+create or replace function add_account() returns trigger as $$
+	begin 
+		insert into project.user_accounts (balance)
+		values (0);
+		return new;
+	end;
+$$
+language plpgsql;
+
+drop trigger user_add_account on app_users;
+
+create trigger user_add_account
+after insert on app_users
+for each statement 
+execute procedure add_account();
+
+delete from app_users 
+where id = 2;
+
+
+

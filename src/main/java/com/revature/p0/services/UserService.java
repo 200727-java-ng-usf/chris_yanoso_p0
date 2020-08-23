@@ -1,6 +1,8 @@
 package com.revature.p0.services;
 
 import com.revature.p0.exceptions.AuthenticationException;
+import com.revature.p0.exceptions.InvalidRequestException;
+import com.revature.p0.exceptions.ResourcePersistenceException;
 import com.revature.p0.models.AppUser;
 import com.revature.p0.models.Role;
 import com.revature.p0.repos.UserRepository;
@@ -36,7 +38,7 @@ public class UserService {
 
         if (userName == null || userName.trim().equals("") || password == null || password.trim().equals("")) {
             // TODO implement a custom InvalidRequestException
-            throw new RuntimeException("Invalid username/password provided");
+            throw new InvalidRequestException("Invalid username/password provided");
         }
 
         Optional<AppUser> authenticatedUser =userRepo.findUserByCredentials(userName, password);
@@ -63,12 +65,12 @@ public class UserService {
 
         if (!isUserValid(newUser)) {
             //TODO implement a custom InvalidRequestException
-            throw new RuntimeException("Invalid user field values provided during registration!");
+            throw new InvalidRequestException("Invalid user field values provided during registration!");
         }
 
        if (userRepo.findUserByUserName(newUser.getUserName()).isPresent()) {
             //TODO implement a custom ResourcePersistenceException
-            throw new RuntimeException("Provided username is already in use!");
+            throw new ResourcePersistenceException("Provided username is already in use!");
        }
 
         newUser.setRole(Role.ACCOUNT_HOLDER);
