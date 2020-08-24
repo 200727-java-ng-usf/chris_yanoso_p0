@@ -37,14 +37,12 @@ public class UserService {
     public Optional<AppUser> authenticate(String userName, String password) throws IOException {
 
         if (userName == null || userName.trim().equals("") || password == null || password.trim().equals("")) {
-            // TODO implement a custom InvalidRequestException
             throw new InvalidRequestException("Invalid username/password provided");
         }
 
         Optional<AppUser> authenticatedUser =userRepo.findUserByCredentials(userName, password);
 
         if (!authenticatedUser.isPresent()) {
-            //TODO implement a custom AuthenticationException
             throw new AuthenticationException("No user found with the provided credentials");
 
         }
@@ -64,12 +62,10 @@ public class UserService {
     public void register(AppUser newUser) throws IOException {
 
         if (!isUserValid(newUser)) {
-            //TODO implement a custom InvalidRequestException
             throw new InvalidRequestException("Invalid user field values provided during registration!");
         }
 
        if (userRepo.findUserByUserName(newUser.getUserName()).isPresent()) {
-            //TODO implement a custom ResourcePersistenceException
             throw new ResourcePersistenceException("Provided username is already in use!");
        }
 
@@ -108,4 +104,5 @@ public class UserService {
         if (user.getPassword() == null || user.getPassword().trim().equals("")) return false;
         return true;
     }
+
 }
