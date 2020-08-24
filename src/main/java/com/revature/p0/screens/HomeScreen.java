@@ -12,7 +12,6 @@ public class HomeScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        boolean goodUserInput = false;
         String option;
 
             System.out.println("Please Select one of the following options: " +

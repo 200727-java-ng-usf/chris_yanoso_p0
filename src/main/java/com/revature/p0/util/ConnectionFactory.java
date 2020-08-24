@@ -38,7 +38,6 @@ public class ConnectionFactory {
         if (conn == null) {
             throw new RuntimeException("Failed to establish connection.");
         }
-        System.out.println(conn);
         return conn;
 
     }

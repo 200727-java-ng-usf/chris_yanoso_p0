@@ -27,7 +27,8 @@ public class ScreenUtil {
               .addScreen(new DashboardScreen())
               .addScreen(new DepositScreen(userService))
               .addScreen(new WithdrawScreen())
-              .addScreen(new BalanceScreen());
+              .addScreen(new BalanceScreen())
+              .addScreen(new CurrencyExchangeScreen(userService));
     }
 
     public BufferedReader getConsole() {

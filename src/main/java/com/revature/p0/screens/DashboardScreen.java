@@ -24,11 +24,12 @@ public class DashboardScreen extends Screen {
                     "\n     1. Deposit" +
                     "\n     2. Withdraw" +
                     "\n     3. View Balance" +
-                    "\n     4. Log out");
+                    "\n     4. Currency Exchange" +
+                    "\n     5. Log out");
             option = app.getConsole().readLine().trim();
-            if (option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4")) {
+            if (option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4") || option.equals("5")){
                 goodUserInput = true;
-            } else {
+            } else{
                 System.out.println(option + " was not a valid option.");
             }
         } while (!goodUserInput);
@@ -44,6 +45,9 @@ public class DashboardScreen extends Screen {
                 app.getRouter().navigate("/balance");
                 break;
             case "4":
+                app.getRouter().navigate("/currency");
+                break;
+            case "5":
                 logoff();
                 break;
             default:

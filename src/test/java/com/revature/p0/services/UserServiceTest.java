@@ -3,6 +3,7 @@ package com.revature.p0.services;
 import com.revature.p0.exceptions.InvalidRequestException;
 import com.revature.p0.models.AppUser;
 import com.revature.p0.repos.UserRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +48,21 @@ public class UserServiceTest {
         exceptionRule.expectMessage("Invalid username/password provided");
         user.authenticate(nullString,nullString);
 
+    }
+
+    @Test
+    public void testIsUserValidNull(){
+        boolean expectedResult = false;
+        boolean actualResult = user.isUserValid(nullUser);
+        Assert.assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testIsUserValid(){
+        AppUser newUser = new AppUser("test", "test", "test", "test" );
+        boolean expectedResult = true;
+        boolean actualResult = user.isUserValid(newUser);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
