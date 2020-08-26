@@ -1,13 +1,11 @@
 package com.revature.p0.screens;
 
-import com.revature.p0.models.UserAccount;
+import com.revature.p0.repos.AccountRepo;
 import com.revature.p0.services.AccountService;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.CurrentUser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 
 import static com.revature.p0.AppDriver.app;
@@ -21,40 +19,21 @@ import static com.revature.p0.AppDriver.app;
 public class DepositScreen extends Screen {
 
     private UserService userService;
+    private AccountService accountService;
 
-    public DepositScreen(UserService userService){
+    public DepositScreen(UserService userService, AccountService accountService){
         super("DepositScreen", "/deposit");
         this.userService = userService;
+        this.accountService = accountService;
     }
     @Override
     public void render() throws IOException {
 
-        boolean success = false;
-        float depositAmount;
-        while (!success) {
-            try {
-                float balance = CurrentUser.getCurrentAccount().get().getBalance();
-                boolean goodDeposit = false;
-                while(!goodDeposit) {
-                    System.out.println("Please enter the amount you wish to deposit");
-                    depositAmount = Float.parseFloat((app.getConsole().readLine()));
-                    if (depositAmount < 0){
-                        System.out.println("You can not deposit a negative amount");
-                    } else {
-                        balance += depositAmount;
-                        AccountService.updateBalance(balance);
-                        goodDeposit = true;
-                        CurrentUser.setCurrentAccount(AccountService.setCurrentAccount(CurrentUser.getCurrentUser()));
-                        System.out.println("$" + depositAmount + " has been deposited. Your new balance is $" + balance);
-                    }
-                }
-                success = true;
-            } catch (InputMismatchException ime) {
-                System.out.println("Please enter a valid number");
-            } catch (Exception e) {
-                System.out.println("An exception has occurred: " + e);
-            }
-        }
+        float balance = CurrentUser.getCurrentAccount().get().getBalance();
+        accountService.depositIntoAccount(balance);
+        accountService.setCurrentAccount(CurrentUser.getCurrentUser());
+        balance = CurrentUser.getCurrentAccount().get().getBalance();
+        System.out.print("\nYour new balance is $" + balance);
         app.getRouter().navigate("/dash");
     }
 }

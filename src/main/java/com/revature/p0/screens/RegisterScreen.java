@@ -41,9 +41,12 @@ public class RegisterScreen extends Screen{
             username = app.getConsole().readLine().trim();
             System.out.print("Password: ");
             password = app.getConsole().readLine().trim();
-
+        try {
             AppUser newUser = new AppUser(firstName, lastName, username, password);
-             userService.register(newUser);
+            userService.register(newUser);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
 

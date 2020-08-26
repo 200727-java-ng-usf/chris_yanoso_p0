@@ -20,12 +20,13 @@ public class DashboardScreen extends Screen {
         boolean goodUserInput = false;
         String option;
         do {
-            System.out.println("Please Select one of the following options: " +
+            System.out.print("\nPlease Select one of the following options: " +
                     "\n     1. Deposit" +
                     "\n     2. Withdraw" +
                     "\n     3. View Balance" +
                     "\n     4. Currency Exchange" +
                     "\n     5. Log out");
+            System.out.println("");
             option = app.getConsole().readLine().trim();
             if (option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4") || option.equals("5")){
                 goodUserInput = true;

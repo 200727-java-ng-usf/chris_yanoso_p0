@@ -1,5 +1,6 @@
 package com.revature.p0.screens;
 
+import com.revature.p0.repos.AccountRepo;
 import com.revature.p0.services.AccountService;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.CurrentUser;
@@ -11,15 +12,17 @@ import static com.revature.p0.AppDriver.app;
 
 public class CurrencyExchangeScreen extends Screen {
     private UserService userService;
+    private AccountService accountService;
 
-    public CurrencyExchangeScreen(UserService userService) {
+    public CurrencyExchangeScreen(UserService userService, AccountService accountService) {
         super("Currency Exchange Screen", "/currency");
         this.userService = userService;
+        this.accountService = accountService;
     }
 
     @Override
     public void render() throws IOException {
-        float balance = CurrentUser.getCurrentAccount().get().getBalance();
+
 
         String option;
 
@@ -30,35 +33,8 @@ public class CurrencyExchangeScreen extends Screen {
                 "\n     4. Canadian dollar" +
                 "\n     5. Argentine Peso");
         option = app.getConsole().readLine().trim();
-        boolean success = false;
-        float withdrawAmount = 0;
-        while (!success) {
-            try {
-                boolean goodWithdraw = false;
-                while (!goodWithdraw) {
-                    System.out.println("Please enter the amount you wish to withdraw in USD");
-                    withdrawAmount = Float.parseFloat((app.getConsole().readLine()));
-                    if (withdrawAmount > balance) {
-                        System.out.println("You do not have enough funds in your account");
-                    } else if (withdrawAmount == 0) {
-                        System.out.println("You can not withdraw 0 dollars");
-                    } else if (withdrawAmount < 0) {
-                        System.out.println("You can not withdraw a negative amount");
-                    } else {
-                        balance -= withdrawAmount;
-                        goodWithdraw = true;
-                        AccountService.updateBalance(balance);
-                        CurrentUser.setCurrentAccount(AccountService.setCurrentAccount(CurrentUser.getCurrentUser()));
-                    }
-                }
-                success = true;
-            } catch (InputMismatchException ime) {
-                System.out.println("Please enter a valid number");
-            } catch (Exception e) {
-                System.out.println("An exception has occurred: " + e);
-                ;
-            }
-        }
+        float balance = CurrentUser.getCurrentAccount().get().getBalance();
+        float withdrawAmount= accountService.WithdrawFromAccount(balance);
 
             switch (option) {
                 case "1":
@@ -79,13 +55,16 @@ public class CurrencyExchangeScreen extends Screen {
                     break;
                 case "5":
                     withdrawAmount *= 73.73;
-                    System.out.println("You now have " + withdrawAmount + "Argentine Peso");
+                    System.out.println("You now have " + withdrawAmount + " Argentine Peso");
                     break;
                 default:
                     System.out.println(option + " is not a valid option!");
 
                     break;
             }
+        accountService.setCurrentAccount(CurrentUser.getCurrentUser());
+        balance = CurrentUser.getCurrentAccount().get().getBalance();
+        System.out.println("you now have " + balance + " left in your account");
             app.getRouter().navigate("/dash");
         }
     }

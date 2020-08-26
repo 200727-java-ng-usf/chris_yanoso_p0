@@ -6,6 +6,7 @@ import com.revature.p0.exceptions.ResourcePersistenceException;
 import com.revature.p0.models.AppUser;
 import com.revature.p0.models.Role;
 import com.revature.p0.repos.UserRepository;
+import com.revature.p0.util.CurrentUser;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public class UserService {
      * @throws IOException
      */
 
+    // either return an AppUser or void; (set currentUser in here for simplicity)
     public Optional<AppUser> authenticate(String userName, String password) throws IOException {
 
         if (userName == null || userName.trim().equals("") || password == null || password.trim().equals("")) {
@@ -41,6 +43,13 @@ public class UserService {
         }
 
         Optional<AppUser> authenticatedUser =userRepo.findUserByCredentials(userName, password);
+        // mock userrepo
+        // when/then
+        // Mockito.when(userRepo.findUserByCredentials(Mockito.anyString(), Mockito.anyString())
+        //        .thenReturn(Optional.empty());
+
+        // Mockito.when(userRepo.findUserByCredentials(Mockito.anyString(), Mockito.anyString())
+        //        .thenReturn(Optional.of(new AppUser());
 
         if (!authenticatedUser.isPresent()) {
             throw new AuthenticationException("No user found with the provided credentials");

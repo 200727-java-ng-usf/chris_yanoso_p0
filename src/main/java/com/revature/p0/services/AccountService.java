@@ -2,73 +2,92 @@ package com.revature.p0.services;
 
 import com.revature.p0.models.AppUser;
 import com.revature.p0.models.UserAccount;
-import com.revature.p0.util.ConnectionFactory;
+import com.revature.p0.repos.AccountRepo;
 import com.revature.p0.util.CurrentUser;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Optional;
-import java.util.Set;
+
+import static com.revature.p0.AppDriver.app;
 
 public class AccountService {
 
-    public static Optional<UserAccount> setCurrentAccount(Optional<AppUser> user) {
-       int userId = user.get().getId();
-        Optional<UserAccount> _account = Optional.empty();
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()){
+    private AccountRepo accountRepo;
 
-            String sql = "Select * from project.user_accounts where user_id = ?";
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, CurrentUser.getCurrentUser().get().getId() );
-
-
-            ResultSet rs = pstmt.executeQuery();
-
-            _account = mapResultSet(rs).stream().findFirst();
-
-
-        }catch (SQLException se){
-            se.printStackTrace();
-        }
-        return _account;
-
-    }
-    private static Set<UserAccount> mapResultSet(ResultSet rs) throws SQLException {
-        Set<UserAccount> accounts = new HashSet<>();
-
-        while (rs.next()) {
-            UserAccount temp = new UserAccount();
-            temp.setId(rs.getInt("id"));
-            temp.setBalance(rs.getFloat("balance"));
-            temp.setUser_id(rs.getInt("user_id"));
-            accounts.add(temp);
-        }
-
-        return accounts;
-    }
-    public static void updateBalance(float balance){
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()){
-
-            String sql = "UPDATE project.user_accounts SET balance = ? where user_id = ?";
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setFloat(1,balance);
-            pstmt.setInt(2, CurrentUser.getCurrentUser().get().getId() );
-
-
-            pstmt.executeUpdate();
-
-        }catch (SQLException se){
-            se.printStackTrace();
-        }
+    public AccountService(AccountRepo accountRepo) {
+        super();
+        this.accountRepo = accountRepo;
     }
 
+    public void setCurrentAccount(Optional<AppUser> user){
+        int userId = user.get().getId();
+        Optional<UserAccount> _account = accountRepo.getCurrentAccount(userId);
+        CurrentUser.setCurrentAccount(_account);
 
+    }
+    public void updateBalance(float balance){
+        accountRepo.updateBalance(balance);
+    }
+
+    public void depositIntoAccount(float balance) {
+        boolean success = false;
+        float depositAmount;
+        while (!success) {
+            try {
+                boolean goodDeposit = false;
+                while (!goodDeposit) {
+                    System.out.print("\nPlease enter the amount you wish to deposit");
+                    depositAmount = Float.parseFloat((app.getConsole().readLine()));
+                    if (depositAmount < 0) {
+                        System.out.print("\nYou can not deposit a negative amount");
+                    } else {
+                        balance += depositAmount;
+                        updateBalance(balance);
+                        goodDeposit = true;
+                        System.out.print("\n$" + depositAmount + " has been deposited.");
+                    }
+                }
+                success = true;
+            } catch (InputMismatchException ime) {
+                System.out.print("\nPlease enter a valid number");
+            } catch (NumberFormatException nfe){
+                System.out.print("\nPlease enter a number");
+            }catch (Exception e) {
+                System.out.print("\nAn exception has occurred: " + e);
+            }
+        }
+    }
+    public float WithdrawFromAccount(float balance){
+        boolean success = false;
+        float withdrawAmount = 0;
+        while (!success) {
+            try {
+                boolean goodWithdraw = false;
+                while(!goodWithdraw) {
+                    System.out.print("\nPlease enter the amount you wish to withdraw");
+                    withdrawAmount = Float.parseFloat((app.getConsole().readLine()));
+                    if (withdrawAmount > balance) {
+                        System.out.print("\nYou do not have enough funds in your account");
+                    } else if (withdrawAmount < 0){
+                        System.out.print("\nYou can not withdraw a negative amount");
+                    } else {
+                        balance -= withdrawAmount;
+                        updateBalance(balance);
+                        goodWithdraw = true;
+
+                    }
+                }
+                success = true;
+            } catch (InputMismatchException ime) {
+                System.out.print("\nPlease enter a valid number");
+            }catch (NumberFormatException nfe){
+                System.out.print("\nPlease enter a number");
+            }
+            catch (Exception e) {
+                System.out.println("An exception has occurred: " + e);
+            }
+
+        }
+        return withdrawAmount;
+    }
 }
-
-
-

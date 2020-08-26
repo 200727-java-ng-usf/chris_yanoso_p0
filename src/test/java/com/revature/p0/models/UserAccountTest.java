@@ -1,6 +1,5 @@
 package com.revature.p0.models;
 
-import com.revature.p0.services.AccountService;
 import org.junit.Assert;
 import org.junit.Test;
 
