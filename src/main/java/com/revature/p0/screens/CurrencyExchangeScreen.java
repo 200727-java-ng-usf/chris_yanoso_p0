@@ -10,6 +10,11 @@ import java.util.InputMismatchException;
 
 import static com.revature.p0.AppDriver.app;
 
+/**
+ * screen that will ask what currency a user wants to exchange to
+ * It will then run withdraw look normal but then convert withdrawn $ into another currency
+ */
+
 public class CurrencyExchangeScreen extends Screen {
     private UserService userService;
     private AccountService accountService;

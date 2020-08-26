@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * switches screen, all screens will use navigate to go from one screen to the next
+ */
+
 public class ScreenRouter {
 
     private Set<Screen> screens = new HashSet<>();

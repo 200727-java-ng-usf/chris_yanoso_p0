@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import static com.revature.p0.AppDriver.app;
 
+/**
+ * Landing page on startup
+ * Will come back here after register or logoff
+ */
+
 public class HomeScreen extends Screen {
     public HomeScreen() {
         super("HomeScreen", "/home");

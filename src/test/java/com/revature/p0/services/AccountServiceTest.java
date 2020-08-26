@@ -7,10 +7,7 @@ import com.revature.p0.models.UserAccount;
 import com.revature.p0.repos.AccountRepo;
 import com.revature.p0.repos.UserRepository;
 import com.revature.p0.util.CurrentUser;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import com.revature.p0.exceptions.InvalidRequestException;
 import org.mockito.Mock;
@@ -24,14 +21,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Optional;
 public class AccountServiceTest {
-    private AccountRepo accountRepo = Mockito.mock(AccountRepo.class);
+    private AccountRepo accountRepo;
     private AccountService account;
-    private CurrentUser currentUser = Mockito.mock(CurrentUser.class);
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private ByteArrayOutputStream outContent;
+    private InputStream inContent;
+    private String s;
     @Before
     public void setUp(){
+        accountRepo  = Mockito.mock(AccountRepo.class);
         account = new AccountService(accountRepo);
+        outContent  = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+
+    }
+    @After
+    public void tearDown(){
+        inContent = null;
+        s = null;
+
     }
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -39,8 +46,8 @@ public class AccountServiceTest {
     @Test
     public void testDepositIntoAccount(){
         float balance = 0;
-        String s = "5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
         String expectedResult = "\nPlease enter the amount you wish to deposit" + "\n$5.0 has been deposited.";
         account.depositIntoAccount(balance);
@@ -50,8 +57,8 @@ public class AccountServiceTest {
     @Test
     public void testBadInputDeposit(){
         float balance = 0;
-        String s = "a\n5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "a\n5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
         String expectedResult = "\nPlease enter the amount you wish to deposit" + "\nPlease enter a number" + "\nPlease enter the amount you wish to deposit" + "\n$5.0 has been deposited.";
         account.depositIntoAccount(balance);
@@ -61,9 +68,10 @@ public class AccountServiceTest {
     @Test
     public void  testWithdrawFromAccount(){
         float balance = 56;
-        String s = "5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
+        //Mockito.when(accountRepo.updateBalance(Mockito.anyFloat()).then());
         float expectedResult = 5;
         float withdrawAmount = account.WithdrawFromAccount(balance);
         Assert.assertEquals(expectedResult, withdrawAmount, 0.00);
@@ -72,8 +80,8 @@ public class AccountServiceTest {
     @Test
     public void testBadInputWithdraw(){
         float balance = 56;
-        String s = "n\n5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "n\n5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
         String expectedResult = "\nPlease enter the amount you wish to withdraw" + "\nPlease enter a number" + "\nPlease enter the amount you wish to withdraw";
         float withdrawAmount = account.WithdrawFromAccount(balance);
@@ -83,8 +91,8 @@ public class AccountServiceTest {
     @Test
     public void testOverDraft(){
         float balance = 5;
-        String s = "10\n5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "10\n5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
         String expectedResult = "\nPlease enter the amount you wish to withdraw" + "\nYou do not have enough funds in your account" + "\nPlease enter the amount you wish to withdraw";
         float withdrawAmount = account.WithdrawFromAccount(balance);
@@ -94,8 +102,8 @@ public class AccountServiceTest {
     @Test
     public void testNegativeWithdraw(){
         float balance = 5;
-        String s = "-10\n5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "-10\n5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
         String expectedResult = "\nPlease enter the amount you wish to withdraw" + "\nYou can not withdraw a negative amount" + "\nPlease enter the amount you wish to withdraw";
         float withdrawAmount = account.WithdrawFromAccount(balance);
@@ -105,8 +113,8 @@ public class AccountServiceTest {
     @Test
     public void testNegativeDeposit(){
         float balance = 0;
-        String s = "-10\n5";
-        InputStream inContent = new ByteArrayInputStream(s.getBytes());
+        s = "-10\n5";
+        inContent = new ByteArrayInputStream(s.getBytes());
         System.setIn(inContent);
         String expectedResult = "\nPlease enter the amount you wish to deposit" + "\nYou can not deposit a negative amount" + "\nPlease enter the amount you wish to deposit" + "\n$5.0 has been deposited.";
         account.depositIntoAccount(balance);

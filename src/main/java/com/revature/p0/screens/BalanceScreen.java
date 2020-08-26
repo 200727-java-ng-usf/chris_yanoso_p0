@@ -8,6 +8,9 @@ import java.io.IOException;
 
 import static com.revature.p0.AppDriver.app;
 
+/**
+ * Screen that handles balance
+ */
 
 public class BalanceScreen extends Screen {
     public BalanceScreen() {
@@ -16,7 +19,6 @@ public class BalanceScreen extends Screen {
 
     @Override
     public void render() throws IOException {
-        System.out.println("Balance Screen reached!");
         float balance = CurrentUser.getCurrentAccount().get().getBalance();
         System.out.println("Your current balance is: $" + balance);
         app.getRouter().navigate("/dash");

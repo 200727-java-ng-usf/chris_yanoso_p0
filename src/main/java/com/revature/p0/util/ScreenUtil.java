@@ -10,6 +10,10 @@ import com.revature.p0.services.UserService;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * Screen list
+ */
+
 public class ScreenUtil {
 
     private BufferedReader console;

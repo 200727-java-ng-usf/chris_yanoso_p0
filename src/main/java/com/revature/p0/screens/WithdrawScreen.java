@@ -9,7 +9,9 @@ import java.util.InputMismatchException;
 
 import static com.revature.p0.AppDriver.app;
 
-
+/**
+ * withdraws money from user account via withdraw method
+ */
 public class WithdrawScreen extends Screen {
     private AccountService accountService;
     public WithdrawScreen(AccountService accountService) {

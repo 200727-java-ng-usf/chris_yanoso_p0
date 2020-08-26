@@ -13,7 +13,7 @@ import static com.revature.p0.AppDriver.app;
 
 /**
  * asks user for deposit
- * adds to money to account
+ * adds to money to account via depositIntoAccount method
  */
 
 public class DepositScreen extends Screen {

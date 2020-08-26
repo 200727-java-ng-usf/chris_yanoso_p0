@@ -2,6 +2,10 @@ package com.revature.p0.screens;
 
 import java.io.IOException;
 
+/**
+ * abstract class for all screens
+ */
+
 public abstract class Screen {
     private String name;
     private String route;

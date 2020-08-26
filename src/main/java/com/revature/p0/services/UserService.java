@@ -105,6 +105,12 @@ public class UserService {
         return false;
     }
 
+    /**
+     * makes sure that the new user is valid (not null or empty string)
+     * @param user
+     * @return
+     */
+
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;
         if (user.getFirstName() == null || user.getFirstName().trim().equals("")) return false;

@@ -10,25 +10,46 @@ import java.util.Optional;
 
 import static com.revature.p0.AppDriver.app;
 
+/**
+ * Account services, screens will use these methods
+ */
 public class AccountService {
 
     private AccountRepo accountRepo;
 
+    /**
+     * creates the account service, used on start up
+     * @param accountRepo
+     */
     public AccountService(AccountRepo accountRepo) {
         super();
         this.accountRepo = accountRepo;
     }
 
+    /**
+     * creates a user account in java, used on log in
+     * @param user
+     */
     public void setCurrentAccount(Optional<AppUser> user){
         int userId = user.get().getId();
         Optional<UserAccount> _account = accountRepo.getCurrentAccount(userId);
         CurrentUser.setCurrentAccount(_account);
 
     }
+
+    /**
+     * updates balance after a transaction
+     * @param balance
+     */
     public void updateBalance(float balance){
         accountRepo.updateBalance(balance);
     }
 
+    /**
+     * takes an input from user
+     * adds those funds into the balance if the input is good (not negative, and a number)
+     * @param balance
+     */
     public void depositIntoAccount(float balance) {
         boolean success = false;
         float depositAmount;
@@ -57,6 +78,14 @@ public class AccountService {
             }
         }
     }
+
+    /**
+     * Method that takes money from user account
+     * used by withdraw screen and currency exchange screen
+     * only withdraws if valid (is a number, not negative, not more than in balance)
+     * @param balance
+     * @return
+     */
     public float WithdrawFromAccount(float balance){
         boolean success = false;
         float withdrawAmount = 0;
@@ -72,8 +101,8 @@ public class AccountService {
                         System.out.print("\nYou can not withdraw a negative amount");
                     } else {
                         balance -= withdrawAmount;
-                        updateBalance(balance);
                         goodWithdraw = true;
+                        updateBalance(balance);
 
                     }
                 }

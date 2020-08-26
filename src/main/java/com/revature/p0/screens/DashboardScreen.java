@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 import static com.revature.p0.AppDriver.app;
 import static com.revature.p0.AppDriver.logoff;
 
+/**
+ *Screen that will transfer user into their desired screen for their desired action
+ */
+
 public class DashboardScreen extends Screen {
     public DashboardScreen() {
         super("DashboardScreen", "/dash");
