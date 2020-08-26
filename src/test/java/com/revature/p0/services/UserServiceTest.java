@@ -6,10 +6,7 @@ import com.revature.p0.exceptions.ResourcePersistenceException;
 import com.revature.p0.models.AppUser;
 import com.revature.p0.repos.UserRepository;
 import com.revature.p0.util.CurrentUser;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import com.revature.p0.exceptions.InvalidRequestException;
 import org.mockito.Mock;
@@ -35,6 +32,10 @@ public class UserServiceTest {
     public void setUp(){
         user = new UserService(userRepo);
         nullString = "";
+    }
+    @After
+    public void tearDown() {
+        user = null;
     }
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();

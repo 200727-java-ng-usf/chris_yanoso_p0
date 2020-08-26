@@ -7,10 +7,7 @@ import com.revature.p0.models.UserAccount;
 import com.revature.p0.repos.AccountRepo;
 import com.revature.p0.repos.UserRepository;
 import com.revature.p0.util.CurrentUser;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import com.revature.p0.exceptions.InvalidRequestException;
 import org.mockito.Mock;
@@ -32,6 +29,10 @@ public class AccountServiceTest {
     public void setUp(){
         account = new AccountService(accountRepo);
         System.setOut(new PrintStream(outContent));
+    }
+    @After
+    public void tearDown() {
+        account = null;
     }
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
