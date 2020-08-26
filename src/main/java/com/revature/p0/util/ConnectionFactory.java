@@ -32,8 +32,8 @@ public class ConnectionFactory {
 
             conn = DriverManager.getConnection(
                     "jdbc:postgresql://java-ng-usf-200727.casmekiat9nm.us-east-1.rds.amazonaws.com:5432/postgres",
-                    "project_app",
-                    "revature");
+                    "username",
+                    "password");
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("A problem with database connection has occurred");
